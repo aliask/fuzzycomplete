@@ -5,7 +5,7 @@
     return;
   }
 
-  if(typeof(Fuse) == 'undefinied') {
+  if(typeof(Fuse) == 'undefined') {
     console.warn('fuzzyComplete plugin requires Fuse.js');
     return;
   }
@@ -87,7 +87,7 @@
 
         resultsBox.empty();
 
-        if(results.length == 0) {
+        if(results.length === 0) {
           selectBox.val(null);
         }
 
@@ -95,7 +95,7 @@
           if(i >= 4)
             return;
 
-          if(i == 0)
+          if(i === 0)
             selectBox.val(e.id);
 
           resultsBox.append(
