@@ -1,6 +1,9 @@
 {
   "name": "fuzzycomplete",
   "version": "0.1.0",
+  "scripts": {
+    "test": "grunt jscs"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-cssmin": "^1.0.1",
