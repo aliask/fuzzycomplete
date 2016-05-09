@@ -1,0 +1,11 @@
+{
+	"preset": "google",
+	"requireSpaceAfterKeywords": null,
+	"requireCurlyBraces": [
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch"
+    ]
+}
