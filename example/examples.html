@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Fuzzycomplete.js example usage</title>
+  <link rel="stylesheet" href="../dist/css/fuzzycomplete.min.css">
+
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js" type="text/javascript"></script>
+  <script src="fuse.min.js" type="text/javascript"></script>
+  <script src="../dist/js/fuzzycomplete.min.js" type="text/javascript"></script>
+
+  <style>
+  .container {
+    box-sizing: border-box;
+    width: 750px;
+    margin: 0 auto;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 1em;
+  }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Basic Usage</h1>
+
+    <p>
+      Fuzzycomplete can be called with no options, simply with the data to be searched via jQuery.
+    </p>
+    <p>
+      In this case it will search all fields supplied within the JSON data, displaying and outputting the first key.
+    </p>
+
+    <h3>Demo</h3>
+    <p>
+      <label for="companyPicker">Companies:</label> <input type="text" id="companyPicker" name="company">
+      <label for="companyValue">Output:</label> <span class="output"></span>
+    </p>
+
+    <h3>Code</h3>
+    <pre>
+var companies = [
+        {"companyName":"Aperture Science"},
+        {"companyName":"MomCorp"},
+        {"companyName":"Wayne Enterprises"},
+        {"companyName":"Umbrella Corp"},
+        {"companyName":"Gringotts"},
+        {"companyName":"Globex"}
+      ];
+
+$(document).ready(function(){
+  $("#companyPicker").fuzzyComplete(companies);
+});
+</pre>
+
+    <h1>Advanced usage</h1>
+
+    <h2>Searching multiple sets of data</h2>
+
+    <p>
+      You might have a set of data which has two (or more) ways of referring to a particular item.
+    </p>
+    <p>
+      An example might be airports:
+      <ul>
+        <li>City Name</li>
+        <li>Airport Code</li>
+      </ul>
+    </p>
+    <p>
+      To help users, you can allow them to search by either type.
+    </p> 
+
+    <h3>Demo</h3>
+
+    <p>
+      Airports: <input type="text" id="airportPicker" name="airport">
+      <label for="companyValue">Output:</label> <span class="output"></span>
+    </p>
+
+    <h3>Code</h3>
+    <pre>
+var airports = [
+                {"airportCode":"MEL","cityName":"Melbourne, Australia"},
+                {"airportCode":"LAX","cityName":"Los Angeles, USA"},
+                {"airportCode":"LHR","cityName":"Heathrow, London"},
+                {"airportCode":"HKG","cityName":"Hong Kong"},
+                {"airportCode":"NRT","cityName":"Narita, Tokyo, Japan"},
+                {"airportCode":"FRA","cityName":"Frankfurt, Germany"}
+              ];
+var fuseOptions = { keys: ["airportCode", "cityName"] };
+var options = { display: "cityName", key: "airportCode", fuseOptions: fuseOptions };
+
+$(document).ready(function(){
+  $("#airportPicker").fuzzyComplete(airports, options);
+}
+    </pre>
+
+
+    <h2>Non-searchable output</h2>
+    <p>
+      You might use an internal value to track items (a database key, for example), but you don't wish for this value to be searchable. Only fields in the "keys" section of fuseOptions will be searched, so simply omit fields you don't wish to be searched.
+    </p>
+    <h3>Demo</h3>
+
+    <p>
+      Shop: <input type="text" id="itemPicker" name="item">
+      <label for="companyValue">Output:</label> <span class="output"></span>
+    </p>
+
+    <h3>Code</h3>
+    <pre>
+var items = [
+              {"itemCode":"item3442","itemName":"Bag of doorknobs"},
+              {"itemCode":"item3446","itemName":"Blinker fluid"},
+              {"itemCode":"item3479","itemName":"Widgets"},
+              {"itemCode":"item3495","itemName":"Firefly class transport ship"},
+              {"itemCode":"item3400","itemName":"Perpetual motion machine"},
+              {"itemCode":"item3454","itemName":"Penrose triangle"}
+            ];
+var fuseOptions = { keys: ["itemName"] };
+var options = { display: "itemName", key: "itemCode", fuseOptions: fuseOptions };
+
+$(document).ready(function(){
+  $("#itemPicker").fuzzyComplete(items, options);
+});
+    </pre>
+
+    <script>
+      var companies = [
+                    {"companyName":"Aperture Science"},
+                    {"companyName":"MomCorp"},
+                    {"companyName":"Wayne Enterprises"},
+                    {"companyName":"Umbrella Corp"},
+                    {"companyName":"Gringotts"},
+                    {"companyName":"Globex"}
+                  ];
+      var airports = [
+                    {"airportCode":"MEL","cityName":"Melbourne, Australia"},
+                    {"airportCode":"LAX","cityName":"Los Angeles, USA"},
+                    {"airportCode":"LHR","cityName":"Heathrow, London"},
+                    {"airportCode":"HKG","cityName":"Hong Kong"},
+                    {"airportCode":"NRT","cityName":"Narita, Tokyo, Japan"},
+                    {"airportCode":"FRA","cityName":"Frankfurt, Germany"}
+                  ];
+      var items = [
+                    {"itemCode":"item3442","itemName":"Bag of doorknobs"},
+                    {"itemCode":"item3446","itemName":"Blinker fluid"},
+                    {"itemCode":"item3479","itemName":"Widgets"},
+                    {"itemCode":"item3495","itemName":"Firefly class transport ship"},
+                    {"itemCode":"item3400","itemName":"Perpetual motion machine"},
+                    {"itemCode":"item3454","itemName":"Penrose triangle"}
+                  ];
+
+      var fuseOptions2 = { keys: ["airportCode", "cityName"] };
+      var options2 = { display: "cityName", key: "airportCode", fuseOptions: fuseOptions2 };
+
+      var fuseOptions3 = { keys: ["itemName"] };
+      var options3 = { display: "itemName", key: "itemCode", fuseOptions: fuseOptions3 };
+
+      $(document).ready(function(){
+        $("#companyPicker").fuzzyComplete(companies);
+        $("#airportPicker").fuzzyComplete(airports, options2);
+        $("#itemPicker").fuzzyComplete(items, options3);
+
+        $('input').on('keyup blur', function() {
+          $(this).parent().find(".output").html($(this).parent().find("select").val());
+        });
+      });
+    </script>
+  </div>  
+
+</body>
+</html>

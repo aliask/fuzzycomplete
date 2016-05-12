@@ -10,10 +10,23 @@
     return;
   }
 
-  $.fn.fuzzyComplete = function(jsonData, fuseOptions) {
+  $.fn.fuzzyComplete = function(jsonData, options) {
 
     return this.each(function() {
-      var f = new Fuse(jsonData, fuseOptions);
+
+      // Default options: search all keys, display and output the first one
+      if(typeof options === 'undefined') {
+        options = {
+          display: Object.keys(jsonData[0])[0],
+          key: Object.keys(jsonData[0])[0],
+          fuseOptions:
+            {
+              keys: Object.keys(jsonData[0])
+            }
+        };
+      }
+
+      var f = new Fuse(jsonData, options.fuseOptions);
       var searchBox = $(this);
       var resultsBox = $('<div>').addClass('fuzzyResults');
       searchBox.after(resultsBox);
@@ -91,17 +104,17 @@
           selectBox.val(null);
         }
 
-        results.forEach(function(e, i) {
+        results.forEach(function(result, i) {
           if(i >= 4)
             return;
 
           if(i === 0)
-            selectBox.val(e.id);
+            selectBox.val(result.id);
 
           resultsBox.append(
             $('<div>')
-              .text(e.longname)
-              .data('id', e.id)
+              .text(result[options.display])
+              .data('id', result[options.key])
               .addClass('__autoitem')
               .on('mousedown', function(e) {
                 e.preventDefault(); // This prevents the element from being hidden by .blur before it's clicked
@@ -139,11 +152,10 @@
         text: '(None Selected)'
       }));
 
-      jsonData.forEach(function(e, i) {
-
+      jsonData.forEach(function(entry, i) {
         selectBox.append($('<option>', {
-          value: e.id,
-          text: e.longname
+          value: entry[options.key],
+          text: entry[options.display]
         }));
 
       });
