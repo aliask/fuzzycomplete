@@ -1,6 +1,30 @@
-# fuzzycomplete
-[![Build Status](https://travis-ci.org/aliask/fuzzycomplete.svg?branch=master)](https://travis-ci.org/aliask/fuzzycomplete)
-jQuery plugin for fuzzy search (using Fuse.js) in an autocomplete form, among other things, allowing multiple search keys.
+# fuzzycomplete [![Build Status](https://travis-ci.org/aliask/fuzzycomplete.svg?branch=master)](https://travis-ci.org/aliask/fuzzycomplete)
+
+jQuery plugin for fuzzy search in an autocomplete form, which uses [Fuse.js](https://github.com/krisk/Fuse).
+
+By harnessing the flexibility Fuse.js, this plugin allows you to do cool stuff, like multiple search keys, case sensitivity selection, customized result ordering, etc. Oh and fuzzy searching, obviously.
+
+## Usage
+
+Fuzzycomplete replaces the selected `<input>` element with a similarly named `<select>` within a HTML form.
+
+The `<input>` field is still visible, and the `<select>` is not displayed, giving the user the ability to free-type their selection before being presented with a list of valid options.
+
+The simplest usage of the plugin is to simply call the plugin on your jQuery selected elements with one parameter, a JSON encoded list of elements to autocomplete.
+
+## Options
+
+`display` (type: `String`)
+
+Defines which property of the supplied JSON data will be used as the displayed text.
+
+`key` (type: `String`)
+
+Defines which property of the supplied JSON data will be used as the `value` parameter for the hidden `<select>` element.
+
+`fuseOptions` (type: `Object`)
+
+See the [Fuse.js github](https://github.com/krisk/Fuse) for full documentation.
 
 ## Examples
 
