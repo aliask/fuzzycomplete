@@ -73,6 +73,12 @@
 
 <p>In this case it will search all fields supplied within the JSON data, displaying and outputting the first key.</p>
 
+<h4><a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h4>
+<p>
+  <label for="companyPicker">Companies:</label> <input type="text" id="companyPicker" name="company">
+  <label for="companyValue">Output:</label> <span class="output"></span>
+</p>
+
 <h4>
 <a id="code" class="anchor" href="#code" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code</h4>
 
@@ -107,6 +113,14 @@
 <p>To help users, you can allow them to search by either type.</p>
 
 <h5>
+<a id="demo-1" class="anchor" href="#demo-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h5>
+
+<p>
+  Airports: <input type="text" id="airportPicker" name="airport">
+  <label for="companyValue">Output:</label> <span class="output"></span>
+</p>
+
+<h5>
 <a id="code-1" class="anchor" href="#code-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code</h5>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> airports <span class="pl-k">=</span> [
@@ -128,6 +142,14 @@
 <a id="non-searchable-output" class="anchor" href="#non-searchable-output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Non-searchable output</h4>
 
 <p>You might use an internal value to track items (a database key, for example), but you don't wish for this value to be searchable. Only fields in the "keys" section of fuseOptions will be searched, so simply omit fields you don't wish to be searched.</p>
+
+<h5>
+<a id="demo-2" class="anchor" href="#demo-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h5>
+
+<p>
+  Shop: <input type="text" id="itemPicker" name="item">
+  <label for="companyValue">Output:</label> <span class="output"></span>
+</p>
 
 <h5>
 <a id="code-2" class="anchor" href="#code-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code</h5>
@@ -157,6 +179,9 @@
       </footer>
     </div>
 
+    <script src="javascripts/jquery-2.2.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/fuse.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/main.js" type="text/javascript" charset="utf-8"></script>
     
 
   </body>
