@@ -148,6 +148,12 @@ img {
   -ms-box-shadow: 0 0 5px #ebebeb;
 }
 
+img.CI {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
 p img {
   display: inline;
   margin: 0;
