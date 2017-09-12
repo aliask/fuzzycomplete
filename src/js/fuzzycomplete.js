@@ -19,6 +19,7 @@
         options = {
           display: Object.keys(jsonData[0])[0],
           key: Object.keys(jsonData[0])[0],
+          resultsLimit: 4,
           fuseOptions:
             {
               keys: Object.keys(jsonData[0])
@@ -105,7 +106,7 @@
         }
 
         results.forEach(function(result, i) {
-          if(i >= 4)
+          if(i >= options.resultsLimit)
             return;
 
           if(i === 0)
