@@ -110,7 +110,7 @@
             return;
 
           if(i === 0)
-            selectBox.val(result.id);
+            selectBox.val(result[options.key]);
 
           resultsBox.append(
             $('<div>')
