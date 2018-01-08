@@ -22,6 +22,10 @@ Defines which property of the supplied JSON data will be used as the displayed t
 
 Defines which property of the supplied JSON data will be used as the `value` parameter for the hidden `<select>` element.
 
+`resultsLimit` (type: `Integer`)
+
+Defines the maximum number of results to display at a time.
+
 `fuseOptions` (type: `Object`)
 
 See the [Fuse.js github](https://github.com/krisk/Fuse) for full documentation.
