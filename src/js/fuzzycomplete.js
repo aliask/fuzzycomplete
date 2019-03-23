@@ -46,7 +46,7 @@
 
       function selectCurrent() {
         selectBox.val(resultsBox.children('.selected').first().data('id'));
-        searchBox.val(resultsBox.children('.selected').first().text());
+        searchBox.val(resultsBox.children('.selected').first().data('displayValue'));
       }
 
       searchBox.keydown(function(e) {
@@ -123,10 +123,17 @@
                                selectCurrent();
                                resultsBox.hide();
                              });
-          if (typeof options.displayFunction === 'function') {
-            resultsRow = resultsRow.html( options.displayFunction(result, i) );
+          if (typeof options.display === 'function') {
+            resultsRow.html( options.display(result, i) );
           } else {
-            resultsRow = resultsRow.text(result[options.display]);
+            resultsRow.text(result[options.display]);
+          }
+          if (typeof options.displayValue === 'function') {
+            resultsRow.data('displayValue', options.displayValue(result, i));
+          } else if (typeof options.displayValue === 'string') {
+            resultsRow.data('displayValue', result[options.displayValue]);
+          } else {
+            resultsRow.data('displayValue', resultsRow.text());
           }
           resultsBox.append(resultsRow);
         });

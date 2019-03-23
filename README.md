@@ -14,9 +14,13 @@ The simplest usage of the plugin is to simply call the plugin on your jQuery sel
 
 ## Options
 
-`display` (type: `String`)
+`display` (type: `String` or `Function`)
 
-Defines which property of the supplied JSON data will be used as the displayed text.
+Defines which property of the supplied JSON data will be used as the displayed text. If function is defined, the function is called during each row to generate the results box row. The function signature should be: `function (result, key) { .. }`.
+
+`displayValue` (type: `String` or `Function`)
+
+Controls what data is displayed in the input box after a selection has been made from the results box. Can either be a string to define the key of the result data to display or a function with the signature `function (result, key) { .. }` where the return value will be the data inputted into the input box on selection.
 
 `key` (type: `String`)
 
@@ -107,5 +111,37 @@ var options = { display: "itemName", key: "itemCode", fuseOptions: fuseOptions }
 
 $(document).ready(function(){
   $("#itemPicker").fuzzyComplete(items, options);
+});
+```
+
+
+#### Custom ResultsBox & Input Box Selection
+
+You might want to format results in a special format or combine fields from the search results. You can pass a function as the display option to define custom html in the resultbox. You can use displayValue to select what value to display in the input text box.
+
+##### Code
+
+```javascript
+var items = [
+              {"itemCode":"item3442","itemName":"Bag of doorknobs"},
+              {"itemCode":"item3446","itemName":"Blinker fluid"},
+              {"itemCode":"item3479","itemName":"Widgets"},
+              {"itemCode":"item3495","itemName":"Firefly class transport ship"},
+              {"itemCode":"item3400","itemName":"Perpetual motion machine"},
+              {"itemCode":"item3454","itemName":"Penrose triangle"}
+            ];
+var fuseOptions = { keys: ["itemName"] };
+var displayFunction = function(result,id) {
+  return id + ". <b>" + result['itemName'] "</b> - " + result['itemCode'];
+};
+var options = {
+  display: displayFunction,
+  displayValue: "itemName",
+  key: "itemCode",
+  fuseOptions: fuseOptions
+};
+
+$(document).ready(function(){
+  $("#customResultsBoxPicker").fuzzyComplete(items, options);
 });
 ```
