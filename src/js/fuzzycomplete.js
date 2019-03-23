@@ -112,22 +112,23 @@
           if(i === 0)
             selectBox.val(result[options.key]);
 
-          resultsBox.append(
-            $('<div>')
-              .text(result[options.display])
-              .data('id', result[options.key])
-              .addClass('__autoitem')
-              .on('mousedown', function(e) {
-                e.preventDefault(); // This prevents the element from being hidden by .blur before it's clicked
-              })
-              .click(function() {
-                resultsBox.find('.selected').removeClass('selected');
-                $(this).addClass('selected');
-                selectCurrent();
-                resultsBox.hide();
-              })
-          );
-
+          var resultsRow = $('<div>').data('id', result[options.key])
+                             .addClass('__autoitem')
+                             .on('mousedown', function(e) {
+                               e.preventDefault(); // This prevents the element from being hidden by .blur before it's clicked
+                             })
+                             .click(function() {
+                               resultsBox.find('.selected').removeClass('selected');
+                               $(this).addClass('selected');
+                               selectCurrent();
+                               resultsBox.hide();
+                             });
+          if (typeof options.displayFunction === 'function') {
+            resultsRow = resultsRow.html( options.displayFunction(result, i) );
+          } else {
+            resultsRow = resultsRow.text(result[options.display]);
+          }
+          resultsBox.append(resultsRow);
         });
 
         if(resultsBox.children().length) {
