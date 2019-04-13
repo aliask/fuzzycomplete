@@ -22,13 +22,21 @@ Defines which property of the supplied JSON data will be used as the displayed t
 
 Controls what data is displayed in the input box after a selection has been made from the results box. Can either be a string to define the key of the result data to display or a function with the signature `function (result, key) { .. }` where the return value will be the data inputted into the input box on selection.
 
-`key` (type: `String`)
+`key` (type: `String` or `Function`)
 
 Defines which property of the supplied JSON data will be used as the `value` parameter for the hidden `<select>` element.
+
+`extraData` (type: `String` or `Function`)
+
+Defines what data will be set to the `extraData` key in the selectBox/searchBox  data. String will be the key while a function will utilize the same signature as display (`function (result, key) { .. }`). If extraData option is not set, the extraData field will be left undefined.
 
 `resultsLimit` (type: `Integer`)
 
 Defines the maximum number of results to display at a time.
+
+`allowFreeInput` (type: `Boolean`)
+
+Default false. Disregards everything mentioned in the usage section and does not replace the input element with a select element. This allows free form text that does not match a select element to be inputted. With `allowFreeInput` false, text inputted that does not match a selection would be discarded (field would be blank) on form submission.
 
 `fuseOptions` (type: `Object`)
 

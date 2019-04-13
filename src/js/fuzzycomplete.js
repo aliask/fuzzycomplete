@@ -20,6 +20,7 @@
           display: Object.keys(jsonData[0])[0],
           key: Object.keys(jsonData[0])[0],
           resultsLimit: 4,
+          allowFreeInput: false,
           fuseOptions:
             {
               keys: Object.keys(jsonData[0])
@@ -31,9 +32,13 @@
       var searchBox = $(this);
       var resultsBox = $('<div>').addClass('fuzzyResults');
       searchBox.after(resultsBox);
-      var selectBox = $('<select>').attr('name', searchBox.attr('name')).hide();
+      var selectBox = $('<select>').hide();
+
+      if (options.allowFreeInput !== true) {
+        selectBox.attr('name', searchBox.attr('name'));
+        searchBox.removeAttr('name');
+      }
       searchBox.after(selectBox);
-      searchBox.removeAttr('name');
 
       var pos = searchBox.position();
       pos.left += parseInt(searchBox.css('marginLeft'), 10);
@@ -47,6 +52,9 @@
       function selectCurrent() {
         selectBox.val(resultsBox.children('.selected').first().data('id'));
         searchBox.val(resultsBox.children('.selected').first().data('displayValue'));
+
+        selectBox.data('extraData', resultsBox.children('.selected').first().data('extraData'));
+        searchBox.data('extraData', resultsBox.children('.selected').first().data('extraData'));
       }
 
       searchBox.keydown(function(e) {
@@ -112,8 +120,7 @@
           if(i === 0)
             selectBox.val(result[options.key]);
 
-          var resultsRow = $('<div>').data('id', result[options.key])
-                             .addClass('__autoitem')
+          var resultsRow = $('<div>').addClass('__autoitem')
                              .on('mousedown', function(e) {
                                e.preventDefault(); // This prevents the element from being hidden by .blur before it's clicked
                              })
@@ -123,6 +130,12 @@
                                selectCurrent();
                                resultsBox.hide();
                              });
+
+          if (typeof options.key === 'function') {
+            resultsRow.data('id',options.key(result,i));
+          } else {
+            resultsRow.data('id',result[options.key]);
+          }
           if (typeof options.display === 'function') {
             resultsRow.html( options.display(result, i) );
           } else {
@@ -135,6 +148,12 @@
           } else {
             resultsRow.data('displayValue', resultsRow.text());
           }
+          if (typeof options.extraData === 'function') {
+            resultsRow.data('extraData', options.extraData(result, i));
+          } else if (typeof options.extraData === 'string') {
+            resultsRow.data('extraData', result[options.extraData]);
+          }
+
           resultsBox.append(resultsRow);
         });
 
@@ -162,9 +181,21 @@
       }));
 
       jsonData.forEach(function(entry, i) {
+        var value;
+        var text;
+        if (typeof options.key === 'function') {
+          value = options.key(entry,i);
+        } else {
+          value = entry[options.key];
+        }
+        if (typeof options.display === 'function') {
+          text = options.display(entry, i);
+        } else {
+          text = entry[options.display];
+        }
         selectBox.append($('<option>', {
-          value: entry[options.key],
-          text: entry[options.display]
+          value: value,
+          text: text
         }));
 
       });
