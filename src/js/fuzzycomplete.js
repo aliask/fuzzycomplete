@@ -39,14 +39,22 @@
       }
       searchBox.after(selectBox);
 
-      var pos = searchBox.position();
-      pos.left += parseInt(searchBox.css('marginLeft'), 10);
-      pos.top += parseInt(searchBox.css('marginTop'), 10);
-      resultsBox.css({
-        'left': pos.left,
-        'top': pos.top + searchBox.outerHeight(),
-        'width': searchBox.outerWidth()
-      });
+      function reposition() {
+        var pos = searchBox.position();
+        pos.left += parseInt(searchBox.css('marginLeft'), 10);
+        pos.top += parseInt(searchBox.css('marginTop'), 10);
+        resultsBox.css({
+          'left': pos.left,
+          'top': pos.top + searchBox.outerHeight(),
+          'width': searchBox.outerWidth()
+        });
+      }
+
+      reposition();
+
+      // Reposition the results on window resize and font load in case the search box has moved 
+      window.addEventListener('resize', reposition);
+      document.fonts.ready.then(reposition);
 
       function selectCurrent() {
         selectBox.val(resultsBox.children('.selected').first().data('id'));

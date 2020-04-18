@@ -11,6 +11,10 @@
   padding: 2px;
 }
 
-.__autoitem.selected {
-  background: #89f;
+.__autoitem.selected, .__autoitem.selected:hover {
+  background: #9ac;
+}
+
+.__autoitem:hover {
+  background: #eee;
 }
