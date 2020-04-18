@@ -3,8 +3,12 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+    eslint: {
+      target: ['src/js/*.js']
+    },
     uglify: {
       options: {
+        sourceMap: true,
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
@@ -13,6 +17,9 @@ module.exports = function(grunt) {
       }
     },
     cssmin: {
+      options: {
+        sourceMap: true,
+      },
       target: {
         files: [{
           expand: true,
@@ -22,20 +29,12 @@ module.exports = function(grunt) {
           ext: '.min.css'
         }]
       }
-    },
-    jscs: {
-      src: "src/js/*.js",
-      options: {
-          config: ".jscsrc",
-          esnext: true, // If you use ES6 http://jscs.info/overview.html#esnext 
-          verbose: true // If you need output with rule names http://jscs.info/overview.html#verbose 
-      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks("grunt-jscs");
+  grunt.loadNpmTasks("grunt-eslint");
 
   // Default task(s).
   grunt.registerTask('default', ['uglify', 'cssmin']);

@@ -1,13 +1,14 @@
 {
   "name": "fuzzycomplete",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
-    "test": "grunt jscs"
+    "test": "grunt eslint",
+    "build": "grunt"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
-    "grunt-contrib-cssmin": "^1.0.1",
-    "grunt-contrib-uglify": "^1.0.1",
-    "grunt-jscs": "^2.8.0"
+    "grunt-contrib-cssmin": "^3.0.0",
+    "grunt-contrib-uglify": "^4.0.1",
+    "grunt-eslint": "^22.0.0"
   }
 }

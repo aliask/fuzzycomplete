@@ -15,7 +15,7 @@
     return this.each(function() {
 
       // Default options: search all keys, display and output the first one
-      if(typeof options === 'undefined') {
+      if(typeof options === 'undefined')
         options = {
           display: Object.keys(jsonData[0])[0],
           key: Object.keys(jsonData[0])[0],
@@ -26,7 +26,6 @@
               keys: Object.keys(jsonData[0])
             }
         };
-      }
 
       var f = new Fuse(jsonData, options.fuseOptions);
       var searchBox = $(this);
@@ -109,9 +108,8 @@
 
         resultsBox.empty();
 
-        if(results.length === 0) {
+        if(results.length === 0)
           selectBox.val(null);
-        }
 
         results.forEach(function(result, i) {
           if(i >= options.resultsLimit)
@@ -131,28 +129,27 @@
                                resultsBox.hide();
                              });
 
-          if (typeof options.key === 'function') {
+          if (typeof options.key === 'function')
             resultsRow.data('id',options.key(result,i));
-          } else {
+          else
             resultsRow.data('id',result[options.key]);
-          }
-          if (typeof options.display === 'function') {
+            
+          if (typeof options.display === 'function')
             resultsRow.html( options.display(result, i) );
-          } else {
+          else
             resultsRow.text(result[options.display]);
-          }
-          if (typeof options.displayValue === 'function') {
+            
+          if (typeof options.displayValue === 'function')
             resultsRow.data('displayValue', options.displayValue(result, i));
-          } else if (typeof options.displayValue === 'string') {
+          else if (typeof options.displayValue === 'string')
             resultsRow.data('displayValue', result[options.displayValue]);
-          } else {
+          else
             resultsRow.data('displayValue', resultsRow.text());
-          }
-          if (typeof options.extraData === 'function') {
+
+          if (typeof options.extraData === 'function') 
             resultsRow.data('extraData', options.extraData(result, i));
-          } else if (typeof options.extraData === 'string') {
+          else if (typeof options.extraData === 'string')
             resultsRow.data('extraData', result[options.extraData]);
-          }
 
           resultsBox.append(resultsRow);
         });
@@ -170,9 +167,8 @@
       });
 
       searchBox.focus(function() {
-        if(resultsBox.children().length) {
+        if(resultsBox.children().length)
           resultsBox.show();
-        }
       });
 
       selectBox.append($('<option>', {
@@ -183,16 +179,16 @@
       jsonData.forEach(function(entry, i) {
         var value;
         var text;
-        if (typeof options.key === 'function') {
+        if (typeof options.key === 'function')
           value = options.key(entry,i);
-        } else {
+        else
           value = entry[options.key];
-        }
-        if (typeof options.display === 'function') {
+
+        if (typeof options.display === 'function')
           text = options.display(entry, i);
-        } else {
+        else
           text = entry[options.display];
-        }
+
         selectBox.append($('<option>', {
           value: value,
           text: text
