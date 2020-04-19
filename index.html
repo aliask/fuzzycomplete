@@ -52,13 +52,29 @@
 <h2>
 <a id="options" class="anchor" href="#options" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Options</h2>
 
-<p><code>display</code> (type: <code>String</code>)</p>
+<p><code>display</code> (type: <code>String</code> or <code>Function</code>)</p>
 
-<p>Defines which property of the supplied JSON data will be used as the displayed text.</p>
+<p>Defines which property of the supplied JSON data will be used as the displayed text. If function is defined, the function is called during each row to generate the results box row. The function signature should be: <code>function (result, key) { .. }</code>.</p>
 
-<p><code>key</code> (type: <code>String</code>)</p>
+<p><code>displayValue</code> (type: <code>String</code> or <code>Function</code>)</p>
+
+<p>Controls what data is displayed in the input box after a selection has been made from the results box. Can either be a string to define the key of the result data to display or a function with the signature <code>function (result, key) { .. }</code> where the return value will be the data inputted into the input box on selection.</p>
+
+<p><code>key</code> (type: <code>String</code> or <code>Function</code>)</p>
 
 <p>Defines which property of the supplied JSON data will be used as the <code>value</code> parameter for the hidden <code>&lt;select&gt;</code> element.</p>
+
+<p><code>extraData</code> (type: <code>String</code> or <code>Function</code>)</p>
+
+<p>Defines what data will be set to the <code>extraData</code> key in the selectBox/searchBox  data. String will be the key while a function will utilize the same signature as display (<code>function (result, key) { .. }</code>). If extraData option is not set, the extraData field will be left undefined.</p>
+
+<p><code>resultsLimit</code> (type: <code>Integer</code>)</p>
+
+<p>Defines the maximum number of results to display at a time.</p>
+
+<p><code>allowFreeInput</code> (type: <code>Boolean</code>)</p>
+
+<p>Default false. Disregards everything mentioned in the usage section and does not replace the input element with a select element. This allows free form text that does not match a select element to be inputted. With <code>allowFreeInput</code> false, text inputted that does not match a selection would be discarded (field would be blank) on form submission.</p>
 
 <p><code>fuseOptions</code> (type: <code>Object</code>)</p>
 
@@ -169,6 +185,47 @@
 <span class="pl-en">$</span>(<span class="pl-c1">document</span>).<span class="pl-en">ready</span>(<span class="pl-k">function</span>(){
   <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>#itemPicker<span class="pl-pds">"</span></span>).<span class="pl-en">fuzzyComplete</span>(items, options);
 });</pre></div>
+
+
+<h4>
+  <a id="custom-resultsbox" class="anchor" href="#custom-resultsbox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom ResultsBox & Input Box Selection</h4>
+  
+  <p>You might want to format results in a special format or combine fields from the search results. You can pass a function as the display option to define custom html in the resultbox. You can use displayValue to select what value to display in the input text box.</p>
+
+  <h5>
+    <a id="demo-3" class="anchor" href="#demo-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo</h5>
+    
+    <p>
+      Item: <input type="text" id="customResultsBoxPicker" name="item">
+      <label for="companyValue">Output:</label> <span class="output"></span>
+    </p>
+
+    <h5>
+      <a id="code-3" class="anchor" href="#code-3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Code</h5>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> items <span class="pl-k">=</span> [
+        {<span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>item3442<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Bag of doorknobs<span class="pl-pds">"</span></span>},
+        {<span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>item3446<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Blinker fluid<span class="pl-pds">"</span></span>},
+        {<span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>item3479<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Widgets<span class="pl-pds">"</span></span>},
+        {<span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>item3495<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Firefly class transport ship<span class="pl-pds">"</span></span>},
+        {<span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>item3400<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Perpetual motion machine<span class="pl-pds">"</span></span>},
+        {<span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>item3454<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span><span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">"</span>Penrose triangle<span class="pl-pds">"</span></span>}
+      ];
+<span class="pl-k">var</span> fuseOptions <span class="pl-k">=</span> { keys<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span>] };
+<span class="pl-k">var</span> <span class="pl-en">displayFunction</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(<span class="pl-smi">result</span>,<span class="pl-smi">id</span>) {
+  <span class="pl-k">return</span> id <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>. &lt;b&gt;<span class="pl-pds">"</span></span> <span class="pl-k">+</span> result[<span class="pl-s"><span class="pl-pds">'</span>itemName<span class="pl-pds">'</span></span>] <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;/b&gt; - <span class="pl-pds">"</span></span> <span class="pl-k">+</span> result[<span class="pl-s"><span class="pl-pds">'</span>itemCode<span class="pl-pds">'</span></span>];
+};
+<span class="pl-k">var</span> options <span class="pl-k">=</span> {
+  display<span class="pl-k">:</span> displayFunction,
+  displayValue<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>itemName<span class="pl-pds">"</span></span>,
+  key<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>itemCode<span class="pl-pds">"</span></span>,
+  fuseOptions<span class="pl-k">:</span> fuseOptions
+};
+
+<span class="pl-en">$</span>(<span class="pl-c1">document</span>).<span class="pl-en">ready</span>(<span class="pl-k">function</span>(){
+  <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">"</span>#customResultsBoxPicker<span class="pl-pds">"</span></span>).<span class="pl-en">fuzzyComplete</span>(items, options);
+});</pre></div>
+
       </section>
     </div>
 

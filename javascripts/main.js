@@ -29,10 +29,22 @@ var options2 = { display: "cityName", key: "airportCode", fuseOptions: fuseOptio
 var fuseOptions3 = { keys: ["itemName"] };
 var options3 = { display: "itemName", key: "itemCode", fuseOptions: fuseOptions3 };
 
+var fuseOptions4 = { keys: ["itemName"] };
+var displayFunction = function(result,id) {
+  return id + ". <b>" + result['itemName'] + "</b> - " + result['itemCode'];
+};
+var options4 = {
+  display: displayFunction,
+  displayValue: "itemName",
+  key: "itemCode",
+  fuseOptions: fuseOptions4
+};
+
 $(document).ready(function(){
   $("#companyPicker").fuzzyComplete(companies);
   $("#airportPicker").fuzzyComplete(airports, options2);
   $("#itemPicker").fuzzyComplete(items, options3);
+  $("#customResultsBoxPicker").fuzzyComplete(items, options4);
 
   $('input').on('keyup blur', function() {
     $(this).parent().find(".output").html($(this).parent().find("select").val());
