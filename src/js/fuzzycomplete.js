@@ -120,6 +120,10 @@
           selectBox.val(null);
 
         results.forEach(function(result, i) {
+          // Forward compatibility for Fuse>=5.0.2
+          if("item" in result && "refIndex" in result)
+            result = result.item;
+
           if(i >= options.resultsLimit)
             return;
 
